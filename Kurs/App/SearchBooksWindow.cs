@@ -16,18 +16,20 @@ namespace Kurs.App
     {
         private Core.ADT.Vec<BookEntity> _books;
 
-        public SearchBooksWindow()
+        public SearchBooksWindow(string regex = "")
         {
             InitializeComponent();
             _books = Kostil.DB.select_all<BookEntity>();
+
+            search_impl(regex);
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void search_impl(string regex)
         {
             richTextBox1.Text = "";
             try
             {
-                Regex r = new Regex(textBox1.Text);
+                Regex r = new Regex(regex);
                 foreach (BookEntity book in _books)
                 {
                     if (r.IsMatch(book.Contents))
@@ -40,6 +42,11 @@ namespace Kurs.App
             {
                 richTextBox1.Text = $"Search failed! Ex:\r\n{ex.ToString()}";
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            search_impl(textBox1.Text);
         }
 
         private void textBox2_KeyDown(object sender, KeyEventArgs e)

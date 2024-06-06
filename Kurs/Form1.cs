@@ -24,7 +24,7 @@ namespace Kurs
             if (long.TryParse(textBox1.Text, out var id))
             {
                 var list = Kostil.DB.select_all<BookEntity>();
-                foreach(BookEntity book in list)
+                foreach (BookEntity book in list)
                 {
                     if (book.Id == id)
                     {
@@ -33,6 +33,11 @@ namespace Kurs
                     }
                 }
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            new SearchBooksWindow("\\(?([0-9]{3})\\)?([ .-]?)([0-9]{3})\\2([0-9]{4})").ShowDialog();
         }
     }
 }
